@@ -1,10 +1,24 @@
-const express = require('express');
 const CryptoData = require('../models/CryptoData');
 
-const router = express.Router();
+exports.getStats = async (req, res) => {
+    try {
+        const { coin } = req.query;
+        if (!coin) return res.status(400).json({ error: 'Coin is required' });
 
-// Calculate standard deviation for a given cryptocurrency
-router.get('/deviation', async (req, res) => {
+        const latestData = await CryptoData.findOne({ coin }).sort({ timestamp: -1 });
+        if (!latestData) return res.status(404).json({ error: 'No data found for the specified coin' });
+        
+        res.json({
+            price: latestData.price,
+            marketCap: latestData.marketCap,
+            change24h: latestData.change24h,
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch stats' });
+    }
+};
+
+exports.getDeviation = async (req, res) => {
     try {
         const { coin } = req.query;
         if (!coin) return res.status(400).json({ error: 'Coin is required' });
@@ -17,16 +31,8 @@ router.get('/deviation', async (req, res) => {
         const variance = prices.reduce((sum, price) => sum + Math.pow(price - mean, 2), 0) / prices.length;
         const deviation = Math.sqrt(variance);
 
-        console.log('Prices:', prices);
-        console.log('Mean:', mean);
-        console.log('Variance:', variance);
-        console.log('Standard Deviation:', deviation);
-
-        res.json({ deviation: parseFloat(deviation.toFixed(6)) }); // Increased precision
+        res.json({ deviation: parseFloat(deviation.toFixed(6)) });
     } catch (error) {
-        console.error('Error calculating deviation:', error);
         res.status(500).json({ error: 'Failed to calculate deviation' });
     }
-});
-
-module.exports = router;
+};
