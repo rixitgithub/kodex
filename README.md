@@ -1,8 +1,8 @@
-# Kodex Backend Project
+# KoinX Backend Project
 
 ## Overview
 
-The **Kodex Backend** is a Node.js-based API designed to provide real-time cryptocurrency stats, calculate the standard deviation of cryptocurrency prices, and schedule regular data fetching. The backend is built using **Express.js**, **MongoDB**, and **Axios** to fetch data from external sources. The backend is deployed on **Render** for easy access.
+The **KoinX Backend** is a Node.js-based API designed to provide real-time cryptocurrency stats, calculate the standard deviation of cryptocurrency prices, and schedule regular data fetching. The backend is built using **Express.js**, **MongoDB**, and **Axios** to fetch data from external sources. The backend is deployed on **Render** for easy access.
 
 ---
 
