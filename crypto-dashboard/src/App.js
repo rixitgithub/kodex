@@ -70,7 +70,7 @@ const App = () => {
                     placeholder="Enter coin name"
                     style={{
                       padding: '10px',
-                      width: '30%', // Reduced width of input field
+                      width: '30%',
                       border: '1px solid #444',
                       borderRadius: '4px',
                       backgroundColor: '#333',

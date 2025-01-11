@@ -1,6 +1,4 @@
-// src/api/api.js
-
-const API_URL = 'http://localhost:5000/api';  // Replace with your server URL
+const API_URL = 'https://kodex-2mkn.onrender.com/api'; 
 
 export const fetchCryptoStats = async (coin) => {
   try {
