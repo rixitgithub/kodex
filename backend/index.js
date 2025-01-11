@@ -1,26 +1,24 @@
-require('dotenv').config({ path: '../.env' });  // Explicitly specify the path to .env file
+require('dotenv').config();  
 
 const express = require('express');
+const cors = require('cors');
 const connectDB = require('./config/db');
+const statsRoute = require('./routes/stats');
+const deviationRoute = require('./routes/deviation');
+const startCryptoJob = require('./jobs/cryptoJob');
 
 const app = express();
-
-// Check if DB_URI is loaded correctly
-if (!process.env.DB_URI) {
-    console.error('DB_URI is not defined in .env file');
-    process.exit(1);
-}
-
-// Connect to MongoDB
+app.use(cors());
 connectDB();
+app.use(express.json());
 
-// Test route to check if the server is running
-app.get('/', (req, res) => {
-    res.send('MongoDB Connection Test Successful!');
-});
+app.use('/api', statsRoute);
+app.use('/api', deviationRoute);
 
+startCryptoJob();
+
+// Start server
 const port = process.env.PORT || 5000;
-
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server running on port ${port}`);
 });

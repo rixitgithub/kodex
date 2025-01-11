@@ -17,8 +17,14 @@ router.get('/deviation', async (req, res) => {
         const variance = prices.reduce((sum, price) => sum + Math.pow(price - mean, 2), 0) / prices.length;
         const deviation = Math.sqrt(variance);
 
-        res.json({ deviation: parseFloat(deviation.toFixed(2)) });
+        console.log('Prices:', prices);
+        console.log('Mean:', mean);
+        console.log('Variance:', variance);
+        console.log('Standard Deviation:', deviation);
+
+        res.json({ deviation: parseFloat(deviation.toFixed(6)) }); // Increased precision
     } catch (error) {
+        console.error('Error calculating deviation:', error);
         res.status(500).json({ error: 'Failed to calculate deviation' });
     }
 });
